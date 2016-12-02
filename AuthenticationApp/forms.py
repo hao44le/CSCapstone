@@ -72,7 +72,9 @@ class UpdateForm(forms.ModelForm):
     class Meta:
         model = MyUser        
         fields = ('email', 'password', 'first_name', 'last_name','contact_info','description','is_student', 'is_professor', 'is_engineer')
-
+        widgets = { 
+            'description': forms.Textarea()
+        }  
     def clean_password(self):            
         return self.initial["password"]        
 

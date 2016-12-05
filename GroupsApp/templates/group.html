@@ -11,6 +11,11 @@
     <a href="/group/edit?name={{ group.name }}" class="btn btn-default">Edit this Group</a>
     {% if userIsMember %}
       <a href="/group/unjoin?name={{ group.name }}" class="btn btn-default">Unjoin this Group</a>
+      <form style="display:inline;" action="/group/addmember?name={{ group.name }}" method="post">
+        {% csrf_token %}
+        <input id="email" type="text" name="email" placeholder="example@example.com">
+        <input type="submit" value="Add Member" class="btn btn-default">
+      </form>
     {% endif %}
 
     <a href="/group/delete?name={{ group.name }}" class="btn btn-danger">Delete this Group</a>

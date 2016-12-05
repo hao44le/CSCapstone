@@ -134,3 +134,26 @@ def deleteGroup(request):
         return render(request, 'groups.html', context)
     # render error page if user is not logged in
     return render(request, 'autherror.html')
+
+def addMember(request):
+    if request.user.is_authenticated():
+        in_name = request.GET.get('name', 'None')
+        in_group = models.Group.objects.get(name__exact=in_name)
+        is_student = request.user.is_student
+        projects = in_group.project.all()
+        student_email = request.POST.get('email', 'None')
+        if student_email != 'None':
+            student = models.MyUser.objects.filter(email__exact=student_email)
+            if student:
+                in_group.members.add(student[0])
+                in_group.save();
+                student[0].group_set.add(in_group)
+                student[0].save()
+        context = {
+            'group': in_group,
+            'userIsMember': True,
+            'is_student': is_student,
+            'projects' : projects
+        }
+        return render(request, 'group.html', context)
+    return render(request, 'autherror.html')

@@ -33,19 +33,22 @@ def getGroup(request):
         projects = in_group.project.all()
         projects_recommended = []
         for member in in_group.members.all():
-            query_string = ''
-            if member.speciality == None and member.programmingLanguage == None:
-                query_string = member.yearsOfExperience
-            else:
-                if member.programmingLanguage != None:
-                    query_string += member.programmingLanguage + " "
-                if member.speciality != None:
-                    query_string += member.speciality + " "
-                query_string += str(member.yearsOfExperience)
+            if member.speciality != None:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','speciality'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.programmingLanguage != None:
+                query_string = member.programmingLanguage
+                project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.yearsOfExperience != 0:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','yearsOfExperience'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
 
-            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
-            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-            projects_recommended += project_found_entries
 
         context = {
             'group': in_group,
@@ -112,19 +115,21 @@ def joinGroup(request):
         projects = in_group.project.all()
         projects_recommended = []
         for member in in_group.members.all():
-            query_string = ''
-            if member.speciality == None and member.programmingLanguage == None:
-                query_string = member.yearsOfExperience
-            else:
-                if member.programmingLanguage != None:
-                    query_string += member.programmingLanguage + " "
-                if member.speciality != None:
-                    query_string += member.speciality + " "
-                query_string += str(member.yearsOfExperience)
-
-            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
-            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-            projects_recommended += project_found_entries
+            if member.speciality != None:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','speciality'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.programmingLanguage != None:
+                query_string = member.programmingLanguage
+                project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.yearsOfExperience != 0:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','yearsOfExperience'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
         context = {
             'group': in_group,
             'userIsMember': True,
@@ -148,19 +153,21 @@ def unjoinGroup(request):
         projects = in_group.project.all()
         projects_recommended = []
         for member in in_group.members.all():
-            query_string = ''
-            if member.speciality == None and member.programmingLanguage == None:
-                query_string = member.yearsOfExperience
-            else:
-                if member.programmingLanguage != None:
-                    query_string += member.programmingLanguage + " "
-                if member.speciality != None:
-                    query_string += member.speciality + " "
-                query_string += str(member.yearsOfExperience)
-
-            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
-            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-            projects_recommended += project_found_entries
+            if member.speciality != None:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','speciality'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.programmingLanguage != None:
+                query_string = member.programmingLanguage
+                project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.yearsOfExperience != 0:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','yearsOfExperience'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
         context = {
             'group': in_group,
             'userIsMember': False,
@@ -193,19 +200,21 @@ def addMember(request):
         projects = in_group.project.all()
         projects_recommended = []
         for member in in_group.members.all():
-            query_string = ''
-            if member.speciality == None and member.programmingLanguage == None:
-                query_string = member.yearsOfExperience
-            else:
-                if member.programmingLanguage != None:
-                    query_string += member.programmingLanguage + " "
-                if member.speciality != None:
-                    query_string += member.speciality + " "
-                query_string += str(member.yearsOfExperience)
-
-            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
-            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-            projects_recommended += project_found_entries
+            if member.speciality != None:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','speciality'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.programmingLanguage != None:
+                query_string = member.programmingLanguage
+                project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
+            elif member.yearsOfExperience != 0:
+                query_string = member.speciality
+                project_entry_query = get_query(str(query_string), ['name', 'description','yearsOfExperience'])
+                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+                projects_recommended += project_found_entries
 
         student_email = request.POST.get('email', 'None')
         if student_email != 'None':

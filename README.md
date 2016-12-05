@@ -15,7 +15,7 @@ CS390 Students: Please refer to the [grading form](https://docs.google.com/docum
 - [x] 3.3 (8 pts): Complete “University” and “Class” models. All students should belong to 1 University, and can belong to multiple classes. Teachers should be able to manage who is enrolled in their class.
   - [x] 3.3.1 Allow teacher to add/remove students
 - [x] 3.4 (5 pts): Groups: Students can create a group. Only group members may add additional members to the group. Only groups can be assigned to a project.
-  - [ ] 3.4.1 Only group members may add additional members to the group.
+  - [x] 3.4.1 Only group members may add additional members to the group.
   - [x] 3.4.2 Only groups can be assigned to a project.
 - [x] 3.5 (5 pts): Projects: Projects can be only created by engineer/corporate users. Projects have a list of qualifications, which are used for matching. Projects are visible to everyone.
   - [x] 3.5.1 Projects should be editable by users of the company which posted the project.

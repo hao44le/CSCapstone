@@ -20,7 +20,6 @@
         <li><a href="/login">Login</a></li>
         <li><a href="/register">Register</a></li>
         {% else %}
-        <li><a href="/update">Update Profile</a></li>
         <li role="presentation" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             Groups/Organizations <span class="caret"></span>
@@ -57,13 +56,12 @@
 
 
         <!-- add search -->
-        <li><form method="get" action="/search">
+        <li><form class="navbar-form navbar-left" method="get" action="/search">
 
-
-          <!-- <label for="id_q">Search:</label> -->
-          <input type="text" name="q" id="id_q"/>
-          <input type="submit" value="Search"/>
-
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" name="q" id="id_q">
+          </div>
+          <button type="submit" class="btn btn-info" value="Search">Submit</button>
 
         </form></li>
       </ul>

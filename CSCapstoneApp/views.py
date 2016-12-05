@@ -71,12 +71,11 @@ def get_query(query_string, search_fields):
         if query is None:
             query = or_query
         else:
-            query = query & or_query
+            query = query | or_query
     return query
 
 def search(request):
     query_string = ''
-    found_entries = None
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
 

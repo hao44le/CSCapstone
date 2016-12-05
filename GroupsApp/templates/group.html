@@ -10,7 +10,12 @@
     {% if userIsMember or user.is_staff %}
     <a href="/group/edit?name={{ group.name }}" class="btn btn-default">Edit this Group</a>
     {% if userIsMember %}
-      <a href="/group/unjoin?name={{ group.name }}" class="btn btn-default">Unjoin this Group</a>
+    <a href="/group/unjoin?name={{ group.name }}" class="btn btn-default">Unjoin this Group</a>
+    <form style="display:inline;" action="/group/addmember?name={{ group.name }}" method="post">
+      {% csrf_token %}
+      <input id="email" type="text" name="email" placeholder="example@example.com">
+      <input type="submit" value="Add Member" class="btn btn-default">
+    </form>
     {% endif %}
 
     <a href="/group/delete?name={{ group.name }}" class="btn btn-danger">Delete this Group</a>
@@ -78,6 +83,40 @@
     </div>
 </div>
 
+
+
+
+<div class="container">
+  <h2>Recommend Projects for this group</h2>
+  <div class="table-responsive">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th>Projects</th>
+          <th>Description</th>
+          <th>Programming Language</th>
+          <th>Years Of Experience</th>
+          <th>Speciality</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in projects_recommended %}
+        <tr>
+          {% if project not in projects %}
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.programmingLanguage }}</td>
+          <td>{{ project.yearsOfExperience }}</td>
+          <td>{{ project.speciaty }}</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
 <div class="container" role="main">
   <div class="table-responsive">
     <table class="table table-striped sortable">
@@ -100,5 +139,6 @@
     </table>
   </div>
 </div>
+
 
 {% endblock %}

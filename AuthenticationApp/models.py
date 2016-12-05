@@ -20,9 +20,9 @@ class MyUserManager(BaseUserManager):
         user.set_password(password)
         user.last_name = last_name
         #If first_name is not present, set it as email's username by default
-        if first_name is None or first_name == "" or first_name == '':                                
-            user.first_name = email[:email.find("@")]            
-        
+        if first_name is None or first_name == "" or first_name == '':
+            user.first_name = email[:email.find("@")]
+
         #Classify the Users as Students, Professors, Engineers
         if is_student == True and is_professor == True and is_engineer == True:
             #hack to set Admin using forms
@@ -46,7 +46,7 @@ class MyUserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
-        
+
     def create_student(self, email=None, password=None,first_name=None, last_name=None,contact_info=None,description=None):
         return self.create_user(email, password=password,first_name=first_name, last_name=last_name,contact_info=None,description=None,
         is_student=True, is_professor=False, is_engineer=False)
@@ -67,16 +67,16 @@ class MyUser(AbstractBaseUser):
     )
 
     first_name = models.CharField(
-    	max_length=120,
-    	null=True,
-    	blank=True,
-    	)    
+        max_length=120,
+        null=True,
+        blank=True,
+        )
 
     last_name = models.CharField(
-    	max_length=120,
-    	null=True,
-    	blank=True,
-    	)
+        max_length=120,
+        null=True,
+        blank=True,
+        )
     contact_info = models.CharField(
         max_length=120,
         null=True,
@@ -94,17 +94,23 @@ class MyUser(AbstractBaseUser):
     # #New fields added
     is_student = models.BooleanField(default=False,)
     is_professor = models.BooleanField(default=False,)
-    is_engineer = models.BooleanField(default=False,)   
+    is_engineer = models.BooleanField(default=False,)
+
+
+
+    programmingLanguage = models.CharField(max_length=200,default=None,null=True)
+    yearsOfExperience = models.IntegerField(default=0,null=True)
+    speciality = models.CharField(max_length=200,default=None,null=True)
 
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    def get_full_name(self):        
+    def get_full_name(self):
         return "%s %s" %(self.first_name, self.last_name)
 
-    def get_short_name(self):        
+    def get_short_name(self):
         return self.first_name
 
     def __str__(self):              #Python 3
@@ -116,36 +122,37 @@ class MyUser(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         return True
 
-    def has_module_perms(self, app_label):        
+    def has_module_perms(self, app_label):
         return True
 
-    def has_module_perms(self, app_label):        
+    def has_module_perms(self, app_label):
         return True
 
 
     @property
     def is_staff(self):
         return self.is_admin
-    
+
 #     def new_user_reciever(sender, instance, created, *args, **kwargs):
-#     	if created:   
-     
+#     	if created:
+
 # Going to use signals to send emails
 # post_save.connect(new_user_reciever, sender=MyUser)
-             
+
 
 class Student(models.Model):
     user = models.OneToOneField(
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True)
+
     courses = models.ForeignKey('UniversitiesApp.Course',default=None,null=True)
     groups = models.ForeignKey('GroupsApp.Group',default=None,null=True)
     university = models.OneToOneField('UniversitiesApp.University',default=None,null=True)
-    def get_full_name(self):        
+    def get_full_name(self):
         return "%s %s" %(self.user.first_name, self.user.last_name)
 
-    def get_short_name(self):        
+    def get_short_name(self):
         return self.user.first_name
 
     def __str__(self):              #Python 3
@@ -157,7 +164,7 @@ class Student(models.Model):
     def has_perm(self, perm, obj=None):
         return True
 
-    def has_module_perms(self, app_label):        
+    def has_module_perms(self, app_label):
         return True
 
 
@@ -172,10 +179,10 @@ class Professor(models.Model):
         primary_key=True)
     courses = models.ForeignKey('UniversitiesApp.Course',default=None,null=True)
     university = models.OneToOneField('UniversitiesApp.University',default=None,null=True)
-    def get_full_name(self):        
+    def get_full_name(self):
         return "%s %s" %(self.user.first_name, self.user.last_name)
 
-    def get_short_name(self):        
+    def get_short_name(self):
         return self.user.first_name
 
     def __str__(self):              #Python 3
@@ -187,7 +194,7 @@ class Professor(models.Model):
     def has_perm(self, perm, obj=None):
         return True
 
-    def has_module_perms(self, app_label):        
+    def has_module_perms(self, app_label):
         return True
 
     @property
@@ -201,10 +208,10 @@ class Engineer(models.Model):
         primary_key=True)
     companies = models.ForeignKey('CompaniesApp.Company',default=None,null=True)
     projects = models.ForeignKey('ProjectsApp.Project',default=None,null=True)
-    def get_full_name(self):        
+    def get_full_name(self):
         return "%s %s" %(self.user.first_name, self.user.last_name)
 
-    def get_short_name(self):        
+    def get_short_name(self):
         return self.user.first_name
 
     def __str__(self):              #Python 3
@@ -216,9 +223,9 @@ class Engineer(models.Model):
     def has_perm(self, perm, obj=None):
         return True
 
-    def has_module_perms(self, app_label):        
+    def has_module_perms(self, app_label):
         return True
-        
+
     @property
     def is_staff(self):
         return False

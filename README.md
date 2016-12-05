@@ -31,9 +31,14 @@ CS390 Students: Please refer to the [grading form](https://docs.google.com/docum
   - [x] Allow admin to delete anything
 - [x] 3.10 (10 pts): Use a WYSIWYG editor for any multi-line textarea (user profile about, group profile comments, etc). There are many WYSIWYG options available, just google “WYSIWYG editor”. One options is TinyMCE.
   - [x] Replace multi-line textarea with TinyMCE
+
 - [ ] Robustness (5 pts): Did it crash?
 - [ ] Easy To Use (5 pts): Could all tasks be performed with minimal steps?
 - [ ] Presentation (5 pts)
+
+# Extra Features
+
+- [x] full-site search for University, Project, Company, Group and Course
 
 ## TA Features - Will not be provided
 

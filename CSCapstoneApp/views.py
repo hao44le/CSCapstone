@@ -10,6 +10,7 @@ from ProjectsApp.models import Project
 from ProjectsApp.models import Bookmarks
 from GroupsApp.models import Group
 from UniversitiesApp.models import University
+from UniversitiesApp.models import Course
 from CompaniesApp.models import Company
 from django.db.models import Q
 
@@ -79,11 +80,26 @@ def search(request):
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
 
-        entry_query = get_query(query_string, ['name', 'description',])
+        company_entry_query = get_query(query_string, ['name', 'description','website'])
+        company_found_entries = Company.objects.filter(company_entry_query).order_by('-id')
 
-        found_entries = Company.objects.filter(entry_query).order_by('-id')
+        group_entry_query = get_query(query_string, ['name', 'description'])
+        group_found_entries = Group.objects.filter(group_entry_query).order_by('-id')
+
+        project_entry_query = get_query(query_string, ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
+        project_found_entries = Project.objects.filter(project_entry_query).order_by('-updated_at')
+
+        university_found_entries = University.objects.filter(company_entry_query).order_by('-id')
+
+        course_entry_query = get_query(query_string, ['name', 'description','tag'])
+        course_found_entries = Course.objects.filter(course_entry_query).order_by('-id')
+
     context = {
         'query_string' : query_string,
-        'found_entries' : found_entries
+        'company_found_entries' : company_found_entries,
+        'group_found_entries' : group_found_entries,
+        'project_found_entries' : project_found_entries,
+        'university_found_entries' : university_found_entries,
+        'course_found_entries' : course_found_entries
     }
     return render(request,'searchresults.html',context)

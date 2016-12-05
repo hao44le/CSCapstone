@@ -2,9 +2,137 @@
 
 {% block content %}
 
-  <!-- Content -->
-    {{query_string}}
-    <br>
-    <br>
-    {{found_entries}}
+<!-- Content -->
+<!-- Content -->
+<div class="container" role="main">
+  <div class="table-responsive">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th>Projects</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in project_found_entries %}
+        <tr>
+
+          <td><a href="/project?name={{ item.name }}">{{ item.name }}</a></td>
+          <td>{{ item.description }}</td>
+          {% if item in bookmarks %}
+          <td><a href="/project/bookmark?name={{ item.name }}" class="btn btn-info btn-md">
+            <span class="glyphicon glyphicon-bookmark"></span> Unbookmark
+          </a></td>
+          {% else %}
+          <td><a href="/project/bookmark?name={{ item.name }}" class="btn btn-default btn-md">
+            <span class="glyphicon glyphicon-bookmark"></span> Bookmark
+          </a></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- Content -->
+<div class="container" role="main">
+  <div class="table-responsive">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th>Groups</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in group_found_entries %}
+        <tr>
+          <td><a href="/group?name={{ item.name }}">{{ item.name }}</a></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="container" role="main">
+  <div class="table-responsive">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th>University</th>
+          <th>Logo</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in university_found_entries %}
+        <tr>
+
+          <td><a href="/university?name={{ item.name }}">{{ item.name }}</a></td>
+          <td><a href="/university?name={{ item.name }}"><img src="/{{ item.photo }}" alt="University Image" width=50/></a></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="container" role="main">
+  <div class="table-responsive">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+
+          <th>Company</th>
+          <th>Logo</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in company_found_entries %}
+        <tr>
+
+          <td><a href="/company?name={{ item.name }}">{{ item.name }}</a></td>
+          <td><a href="/company?name={{ item.name }}"><img src="/{{ item.photo }}" alt="Company Image" width=50/></a></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- Content -->
+<div class="container" role="main">
+  <div class="table-responsive">
+    <table class="table table-striped sortable">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Tag</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in course_found_entries %}
+        <tr>
+
+          <td>{{ item.tag }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

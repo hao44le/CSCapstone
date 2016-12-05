@@ -22,7 +22,7 @@ CS390 Students: Please refer to the [grading form](https://docs.google.com/docum
 - [x] 3.6 (5 pts): Bookmarks: Create the “Bookmarks” model, which relates user_id and project_id.
   - [x] Add and implement a button on the project page to “Bookmark” a project.
   - [x] Add and implement a bookmark page or list.
-- [ ] 3.7 (12 pts): Implement Matching System: Using group’s combined student properties, calculate suggested projects for the groups to choose.
+- [x] 3.7 (12 pts): Implement Matching System: Using group’s combined student properties, calculate suggested projects for the groups to choose.
 - [x] 3.8 (15 pts): Group Profiles: Each group’s profile should include team member details and the project they opted for. Group members, their teachers, and the project corporate users may post comments on the group profile page, allowing discussion.
   - [ ] Group members, their teachers, and the project corporate users may post comments on the group profile page, allowing discussion.
 - [x] 3.9 (10 pts): Deletion: Allow privileged users to delete groups, projects, classes, and comments.

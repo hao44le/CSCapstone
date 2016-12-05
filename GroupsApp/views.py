@@ -9,6 +9,7 @@ from . import models
 from . import forms
 
 from CommentsApp.models import Comment
+from CSCapstoneApp.views import get_query
 
 
 def getGroups(request):
@@ -30,12 +31,29 @@ def getGroup(request):
         is_student = request.user.is_student
         comments_list = Comment.objects.all()
         projects = in_group.project.all()
+        projects_recommended = []
+        for member in in_group.members.all():
+            query_string = ''
+            if member.speciality == None and member.programmingLanguage == None:
+                query_string = member.yearsOfExperience
+            else:
+                if member.programmingLanguage != None:
+                    query_string += member.programmingLanguage + " "
+                if member.speciality != None:
+                    query_string += member.speciality + " "
+                query_string += str(member.yearsOfExperience)
+
+            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
+            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+            projects_recommended += project_found_entries
+
         context = {
             'group': in_group,
             'userIsMember': is_member,
             'comments' : comments_list,
             'is_student': is_student,
-            'projects' : projects
+            'projects' : projects,
+            'projects_recommended' : projects_recommended
         }
         return render(request, 'group.html', context)
     # render error page if user is not logged in
@@ -92,11 +110,27 @@ def joinGroup(request):
         request.user.group_set.add(in_group)
         request.user.save()
         projects = in_group.project.all()
+        projects_recommended = []
+        for member in in_group.members.all():
+            query_string = ''
+            if member.speciality == None and member.programmingLanguage == None:
+                query_string = member.yearsOfExperience
+            else:
+                if member.programmingLanguage != None:
+                    query_string += member.programmingLanguage + " "
+                if member.speciality != None:
+                    query_string += member.speciality + " "
+                query_string += str(member.yearsOfExperience)
+
+            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
+            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+            projects_recommended += project_found_entries
         context = {
             'group': in_group,
             'userIsMember': True,
             'is_student': is_student,
-            'projects' : projects
+            'projects' : projects,
+            'projects_recommended' : projects_recommended
         }
         return render(request, 'group.html', context)
     return render(request, 'autherror.html')
@@ -112,11 +146,27 @@ def unjoinGroup(request):
         request.user.group_set.remove(in_group)
         request.user.save()
         projects = in_group.project.all()
+        projects_recommended = []
+        for member in in_group.members.all():
+            query_string = ''
+            if member.speciality == None and member.programmingLanguage == None:
+                query_string = member.yearsOfExperience
+            else:
+                if member.programmingLanguage != None:
+                    query_string += member.programmingLanguage + " "
+                if member.speciality != None:
+                    query_string += member.speciality + " "
+                query_string += str(member.yearsOfExperience)
+
+            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
+            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+            projects_recommended += project_found_entries
         context = {
             'group': in_group,
             'userIsMember': False,
             'is_student': is_student,
-            'projects' : projects
+            'projects' : projects,
+            'projects_recommended' : projects_recommended
         }
         return render(request, 'group.html', context)
     return render(request, 'autherror.html')
@@ -141,6 +191,22 @@ def addMember(request):
         in_group = models.Group.objects.get(name__exact=in_name)
         is_student = request.user.is_student
         projects = in_group.project.all()
+        projects_recommended = []
+        for member in in_group.members.all():
+            query_string = ''
+            if member.speciality == None and member.programmingLanguage == None:
+                query_string = member.yearsOfExperience
+            else:
+                if member.programmingLanguage != None:
+                    query_string += member.programmingLanguage + " "
+                if member.speciality != None:
+                    query_string += member.speciality + " "
+                query_string += str(member.yearsOfExperience)
+
+            project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage','yearsOfExperience','speciality'])
+            project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
+            projects_recommended += project_found_entries
+
         student_email = request.POST.get('email', 'None')
         if student_email != 'None':
             student = models.MyUser.objects.filter(email__exact=student_email)
@@ -153,7 +219,8 @@ def addMember(request):
             'group': in_group,
             'userIsMember': True,
             'is_student': is_student,
-            'projects' : projects
+            'projects' : projects,
+            'projects_recommended' : projects_recommended
         }
         return render(request, 'group.html', context)
     return render(request, 'autherror.html')

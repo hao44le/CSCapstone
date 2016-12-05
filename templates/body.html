@@ -50,7 +50,11 @@
 
           </ul>
         </li>
-        <li><a href="/update" style="color:#FFFFFF;">{{user.first_name}}</a></li>
+        {% if request.user.is_student == True %}
+          <li><a href="/updatestudent" style="color:#FFFFFF;">{{user.first_name}}</a></li>
+        {% else %}
+          <li><a href="/update" style="color:#FFFFFF;">{{user.first_name}}</a></li>
+        {% endif %}
         <li><a href="/logout">Logout</a></li>
         {% endif %}
 

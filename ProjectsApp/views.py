@@ -16,7 +16,7 @@ def getProjects(request):
     return render(request, 'projects.html', {
         'projects': projects_list,
     })
-
+@login_required
 def getProject(request):
     in_name = request.GET.get('name', 'None')
     in_project = models.Project.objects.get(name__exact=in_name)

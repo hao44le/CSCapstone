@@ -124,9 +124,10 @@
     <table class="table table-striped sortable">
       <thead>
         <tr>
-          <th style="width: 15%">Time</th>
-          <th style="width: 15%">User</th>
+          <th style="width: 12.5%">Time</th>
+          <th style="width: 12.5%">User</th>
           <th style="width: 70%">Comment</th>
+          <th style="width: 5%"></th>
         </tr>
       </thead>
       <tbody>
@@ -135,6 +136,9 @@
           <td>{{ item.time }}</td>
           <td>{{ item.createdBy.get_full_name }}</td>
           <td>{{ item.comment }}</td>
+          {% if item.createdBy == currentUser %}
+          <td><a href="/group/deleteComment?id={{ item.id }}&group={{ group.name }}" class="btn btn-danger">Delete</a></td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

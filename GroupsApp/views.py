@@ -4,6 +4,7 @@ Created by Naman Patwari on 10/10/2016.
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 from . import models
 from . import forms
@@ -41,7 +42,8 @@ def getGroup(request):
                     'userIsMember': is_member,
                     'comments' : comments_list,
                     'is_student': is_student,
-                    'projects' : projects
+                    'projects' : projects,
+                    'currentUser' : request.user
                 }
                 return render(request, 'group.html', context)
             else:
@@ -77,7 +79,8 @@ def getGroup(request):
             'comments' : comments_list,
             'is_student': is_student,
             'projects' : projects,
-            'projects_recommended' : projects_recommended
+            'projects_recommended' : projects_recommended,
+            'currentUser' : request.user
         }
         return render(request, 'group.html', context)
     # render error page if user is not logged in
@@ -254,5 +257,14 @@ def addMember(request):
             'projects_recommended' : projects_recommended
         }
         return render(request, 'group.html', context)
+    return render(request, 'autherror.html')
+
+def deleteComment(request):
+    if request.user.is_authenticated():
+        in_comment_id = request.GET.get('id')
+        in_group_name = request.GET.get('group')
+        comment = Comment.objects.get(id=in_comment_id)
+        comment.delete()
+        return HttpResponseRedirect("/group?name="+in_group_name)
     return render(request, 'autherror.html')
 

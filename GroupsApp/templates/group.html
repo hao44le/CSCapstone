@@ -73,6 +73,7 @@
   </div>
 </div>
 </div>
+{% if userIsMember %}
 <div class="container" role="main">
     <div class="panel panel-default">
         <form method="post" enctype="multipart/form-data" class="panel-body validate">
@@ -84,6 +85,7 @@
         </form>
     </div>
 </div>
+{% endif %}
 
 
 
@@ -136,7 +138,7 @@
           <td>{{ item.time }}</td>
           <td>{{ item.createdBy.get_full_name }}</td>
           <td>{{ item.comment }}</td>
-          {% if item.createdBy == currentUser %}
+          {% if item.createdBy == currentUser or isAdmin %}
           <td><a href="/group/deleteComment?id={{ item.id }}&group={{ group.name }}" class="btn btn-danger">Delete</a></td>
           {% endif %}
         </tr>

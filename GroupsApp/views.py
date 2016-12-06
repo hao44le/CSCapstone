@@ -43,7 +43,8 @@ def getGroup(request):
                     'comments' : comments_list,
                     'is_student': is_student,
                     'projects' : projects,
-                    'currentUser' : request.user
+                    'currentUser' : request.user,
+                    'isAdmin' : request.user.is_admin
                 }
                 return render(request, 'group.html', context)
             else:
@@ -80,7 +81,8 @@ def getGroup(request):
             'is_student': is_student,
             'projects' : projects,
             'projects_recommended' : projects_recommended,
-            'currentUser' : request.user
+            'currentUser' : request.user,
+            'isAdmin' : request.user.is_admin
         }
         return render(request, 'group.html', context)
     # render error page if user is not logged in

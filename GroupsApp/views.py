@@ -34,7 +34,7 @@ def getGroup(request):
                 new_comment.save()
                 is_member = in_group.members.filter(email__exact=request.user.email)
                 is_student = request.user.is_student
-                comments_list = Comment.objects.all()
+                comments_list = Comment.objects.filter(group=in_group)
                 projects = in_group.project.all()
                 context = {
                     'group': in_group,

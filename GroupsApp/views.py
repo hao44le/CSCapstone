@@ -28,10 +28,9 @@ def getGroup(request):
         if request.method == 'POST':
             form = forms.CommentForm(request.POST)
             if form.is_valid():
-                in_name = request.POST.get('name', 'None')
-                print request.body
+                in_name = request.POST.get('group')
                 in_group = models.Group.objects.get(name__exact=in_name)
-                new_comment = models.Comment(comment=form.cleaned_data['comment'],createdBy=request.user,group=in_group)
+                new_comment = Comment(comment=form.cleaned_data['comment'],createdBy=request.user,group=in_group)
                 new_comment.save()
                 is_member = in_group.members.filter(email__exact=request.user.email)
                 is_student = request.user.is_student

@@ -63,6 +63,7 @@ def auth_register(request):
 
     form = RegisterForm(request.POST or None)
     if form.is_valid():
+        print form.cleaned_data
         new_user = MyUser.objects.create_user(email=form.cleaned_data['email'],
             password=form.cleaned_data["password2"],
             first_name=form.cleaned_data['firstname'], last_name=form.cleaned_data['lastname'],contact_info=form.cleaned_data['contact_info'],description=form.cleaned_data['description'],is_student=form.cleaned_data['student'], is_professor=form.cleaned_data['professor'],

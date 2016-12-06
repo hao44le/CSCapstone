@@ -50,7 +50,7 @@ def getGroup(request):
         in_group = models.Group.objects.get(name__exact=in_name)
         is_member = in_group.members.filter(email__exact=request.user.email)
         is_student = request.user.is_student
-        comments_list = Comment.objects.all()
+        comments_list = Comment.objects.filter(group=in_group)
         projects = in_group.project.all()
         projects_recommended = []
         for member in in_group.members.all():

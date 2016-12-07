@@ -138,32 +138,7 @@ def joinGroup(request):
         in_group.save()
         request.user.group_set.add(in_group)
         request.user.save()
-        projects = in_group.project.all()
-        projects_recommended = []
-        for member in in_group.members.all():
-            if member.speciality != None:
-                query_string = member.speciality
-                project_entry_query = get_query(str(query_string), ['name', 'description','speciality'])
-                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-                projects_recommended += project_found_entries
-            if member.programmingLanguage != None:
-                query_string = member.programmingLanguage
-                project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage'])
-                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-                projects_recommended += project_found_entries
-            if member.yearsOfExperience != 0:
-                query_string = member.speciality
-                project_entry_query = get_query(str(query_string), ['name', 'description','yearsOfExperience'])
-                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-                projects_recommended += project_found_entries
-        context = {
-            'group': in_group,
-            'userIsMember': True,
-            'is_student': is_student,
-            'projects' : projects,
-            'projects_recommended' : projects_recommended
-        }
-        return render(request, 'group.html', context)
+        return HttpResponseRedirect("/group?name="+in_name)
     return render(request, 'autherror.html')
 
 
@@ -176,32 +151,7 @@ def unjoinGroup(request):
         in_group.save()
         request.user.group_set.remove(in_group)
         request.user.save()
-        projects = in_group.project.all()
-        projects_recommended = []
-        for member in in_group.members.all():
-            if member.speciality != None:
-                query_string = member.speciality
-                project_entry_query = get_query(str(query_string), ['name', 'description','speciality'])
-                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-                projects_recommended += project_found_entries
-            elif member.programmingLanguage != None:
-                query_string = member.programmingLanguage
-                project_entry_query = get_query(str(query_string), ['name', 'description','programmingLanguage'])
-                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-                projects_recommended += project_found_entries
-            elif member.yearsOfExperience != 0:
-                query_string = member.speciality
-                project_entry_query = get_query(str(query_string), ['name', 'description','yearsOfExperience'])
-                project_found_entries = models.Project.objects.filter(project_entry_query).order_by('-updated_at')
-                projects_recommended += project_found_entries
-        context = {
-            'group': in_group,
-            'userIsMember': False,
-            'is_student': is_student,
-            'projects' : projects,
-            'projects_recommended' : projects_recommended
-        }
-        return render(request, 'group.html', context)
+        return HttpResponseRedirect("/group?name="+in_name)
     return render(request, 'autherror.html')
 
 

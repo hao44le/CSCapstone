@@ -85,7 +85,7 @@ def auth_register(request):
             new_engineer.save()
         login(request, new_user);
         messages.success(request, 'Success! Your account was created.')
-        return render(request, 'index.html')
+        return HttpResponseRedirect("/")
 
     context = {
         "form": form,

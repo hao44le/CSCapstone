@@ -232,6 +232,8 @@ def addMember(request):
                 in_group.save();
                 student[0].group_set.add(in_group)
                 student[0].save()
+            else:
+                messages.warning(request, 'Invalid email.')
         return HttpResponseRedirect("/group?name="+in_name)
     return render(request, 'autherror.html')
 

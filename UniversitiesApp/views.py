@@ -306,6 +306,8 @@ def addByEmail(request):
                 in_course.save();
                 student[0].course_set.add(in_course)
                 student[0].save()
+            else:
+                messages.warning(request, 'Invalid email.')
         context = {
             'university' : in_university,
             'course' : in_course,
